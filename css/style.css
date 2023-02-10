@@ -1,0 +1,107 @@
+@import url("photographer.css");
+
+body {
+  font-family: "DM Sans", sans-serif;
+  margin: 0;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  color: #901c1c;
+  margin-right: 100px;
+}
+
+.logo {
+  height: 50px;
+  margin-left: 100px;
+}
+
+.photographer_section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 70px;
+  margin-top: 100px;
+}
+
+.photographer_section article {
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card_link {
+  text-decoration: none;
+  text-align: center;
+}
+
+.card_image {
+  height: 200px;
+  width: 200px;
+  border-radius: 100px;
+  object-fit: cover;
+  overflow-clip-margin: unset;
+}
+
+.card_name {
+  color: #d3573c;
+  font-size: 36px;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.card_location {
+  font-size: 18px;
+  color: #901c1c;
+  font-weight: 400;
+  margin: 0px;
+}
+
+.card_slogan {
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0px;
+}
+
+.card_prix {
+  font-size: 13px;
+  color: #757575;
+  font-weight: 400;
+  margin: 0px;
+}
+
+@media screen and (max-width: 1000px) {
+  .photographer_section {
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  header {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  h1 {
+    margin-right: 0px;
+  }
+  .logo {
+    height: 50px;
+    margin-left: 0px;
+  }
+  .photographer_section {
+    grid-template-columns: 1fr;
+    gap: 70px;
+    margin-top: 50px;
+  }
+}
