@@ -3,9 +3,10 @@
 body {
   font-family: "DM Sans", sans-serif;
   margin: 0px auto;
+  max-width: 1440px;
 }
 
-header {
+.header-accueil {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -95,7 +96,7 @@ h1 {
 }
 
 @media screen and (max-width: 700px) {
-  header {
+  .header-accueil {
     margin-top: 20px;
     display: flex;
     flex-direction: column;

@@ -6,18 +6,6 @@ header {
   margin: 40px 0;
 }
 
-#contact_modal {
-  display: none;
-  position: fixed;
-  margin: 0 auto;
-  top: 100px;
-  width: 100%;
-  height: 2300px;
-  z-index: 10;
-}
-#contact_modal::backdrop {
-  background: #80808059;
-}
 .photograph-header {
   margin: 10px 100px 50px 100px;
 }
@@ -85,21 +73,49 @@ header {
   font-weight: 400;
   margin: 0px;
 }
+
+#contact_modal {
+  display: none;
+  position: fixed;
+  margin: 0 auto;
+  height: 77vh;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+#contact_modal::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: #80808059;
+}
+
 .modal {
   border-radius: 5px;
   background-color: #db8876;
-  width: 50%;
+  width: 60%;
+  height: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 35px;
+  padding: 25px;
   margin: auto;
+  box-sizing: border-box;
 }
 
 .modal header {
+  display: flex;
+  align-items: flex-start;
   justify-content: space-between;
   width: 100%;
+  margin: 0;
 }
 
 .modal header img {
@@ -107,9 +123,10 @@ header {
 }
 
 .modal header h2 {
-  font-size: 64px;
+  font-size: 44px;
+  margin: 0;
   font-weight: normal;
-  text-align: center;
+  text-align: left;
 }
 
 form {
@@ -118,25 +135,58 @@ form {
   flex-direction: column;
   align-items: flex-start;
 }
+.formulaire {
+  height: 100%;
+  width: 99%;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
 
+.contact_input {
+  font-size: 20px;
+}
 form label {
   color: #312e2e;
-  font-size: 36px;
+  font-size: 26px;
 }
 
 form div {
   display: flex;
   flex-direction: column;
   width: 100%;
-  align-items: self-start;
-  margin-bottom: 26px;
+  margin-bottom: 5px;
 }
 
 form input {
   width: 100%;
-  height: 68px;
+  height: 38px;
   border: none;
   border-radius: 5px;
+}
+#message {
+  width: 100%;
+  height: 150px;
+  border: none;
+  border-radius: 5px;
+}
+
+.envoyer_button {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  padding: 11px;
+  width: 170px;
+  height: 70px;
+  border: none;
+  background-color: #901c1c;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 30px;
+}
+.envoyer_button:hover {
+  background-color: #312e2e;
 }
 
 .photograph-media {
@@ -208,5 +258,19 @@ form input {
   }
   article {
     text-align: center;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .modal {
+    width: 95%;
+  }
+  .modal header h2 {
+    font-size: 30px;
+  }
+  .encart {
+    text-align: center;
+    width: 70%;
+    right: 10.5vw;
   }
 }

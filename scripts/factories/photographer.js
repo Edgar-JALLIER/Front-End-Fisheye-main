@@ -44,6 +44,8 @@ function photographerFactory(data) {
   }
 
   function getPhotographerPage() {
+    const titreContact = document.querySelector(".titre_contact");
+    titreContact.innerHTML = "Contactez-moi " + "<br>" + `${name}`;
     const main = document.getElementById("main");
 
     const tarifJournalier = document.createElement("div");
@@ -152,3 +154,21 @@ function photographerFactory(data) {
   }
   return { name, picture, getUserCardDOM, getPhotographerPage, getMediaSection };
 }
+
+const bouttonEnvoyer = document.querySelector(".envoyer_button");
+
+bouttonEnvoyer.addEventListener("click", function (e) {
+  const prenom = document.querySelector("#prenom");
+  const nom = document.querySelector("#nom");
+  const email = document.querySelector("#email");
+  const message = document.querySelector("#message");
+  e.preventDefault();
+  if (prenom.validity.valid === true && nom.validity.valid === true && email.validity.valid === true) {
+    console.log("Prénom =", prenom.value);
+    console.log("Nom =", nom.value);
+    console.log("Email =", email.value);
+    console.log("Message =", message.value);
+  } else {
+    console.log("erreur de saisie du formulaire");
+  }
+});
