@@ -2,7 +2,7 @@
 
 body {
   font-family: "DM Sans", sans-serif;
-  margin: 0;
+  margin: 0px auto;
 }
 
 header {
@@ -27,6 +27,7 @@ h1 {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 70px;
   margin-top: 100px;
+  margin-bottom: 50px;
 }
 
 .photographer_section article {
@@ -42,12 +43,21 @@ h1 {
   text-align: center;
 }
 
+.card_link:hover > .card_image {
+  border: 3px solid #d3573c;
+}
+
+.card_link:hover > .card_name {
+  text-decoration: underline;
+}
+
 .card_image {
   height: 200px;
   width: 200px;
   border-radius: 100px;
   object-fit: cover;
   overflow-clip-margin: unset;
+  box-sizing: border-box;
 }
 
 .card_name {
