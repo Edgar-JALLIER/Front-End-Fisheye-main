@@ -55,6 +55,12 @@ async function envoiDesdonnéesDesMedia(medias) {
   });
 }
 
+const bouttonLike = document.querySelectorAll(".media_text-like");
+function test() {
+  //   // await photographerFactory();
+  console.log(bouttonLike);
+}
+
 async function initialisation() {
   // Récupère les datas des photographes
   const photographe = await getOnePhotographer();
@@ -66,3 +72,4 @@ async function initialisation() {
 }
 
 initialisation();
+test();

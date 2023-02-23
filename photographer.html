@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8" />
@@ -8,36 +8,66 @@
     <script src="https://kit.fontawesome.com/a4690ed988.js" crossorigin="anonymous"></script>
     <title>Fisheye - photographe</title>
   </head>
-  <body>
-    <header class="header-accueil">
+  <body id="body">
+    <header class="header-accueil" aria-hidden="false">
       <a href="index.html" title="Lien vers la page d'accueil"
         ><img src="assets/images/logo.png" class="logo" alt="FishEye - Aller à la page d'accueil"
       /></a>
     </header>
-    <main id="main">
-      <div class="photograph-header"></div>
+    <main id="main" aria-label="Contenu de la page principale du photographe" aria-hidden="false">
+      <div class="photograph-header">
+        <div id="btn"></div>
+      </div>
+      <div class="trieur_dropdown-section">
+        <label for="button-tri">Trier par :</label>
+        <div>
+          <button
+            class="trieur_dropdown-button"
+            id="button-tri"
+            type="button"
+            role="listbox"
+            aria-expanded="false"
+            aria-level="Bouton pour ouvrir le menu déroulant"
+          >
+            Popularité
+            <i id="icon-fleche" class="fa-solid fa-chevron-down trieur_dropdown-button-icon"></i>
+          </button>
+          <div class="trieur_dropdown-menu hide">
+            <ul class="dropdown_menu-list">
+              <li class="dropdown_menu-item">Popularité</li>
+              <li class="dropdown_menu-item">Date</li>
+              <li class="dropdown_menu-item">Titre</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div class="photograph-media"></div>
     </main>
-    <div id="contact_modal">
+    <div id="contact_modal" aria-hidden="true" role="dialog">
       <div class="modal">
         <header>
           <h2 class="titre_contact"></h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" alt="" />
+          <button class="close-modal" aria-controls="dialog" aria-label="Boutton pour fermer le formulaire de contact">
+            <i class="fa-solid fa-xmark croix"></i>
+          </button>
         </header>
-        <form>
+        <form id="coordonnées">
           <fieldset class="formulaire">
             <legend>Vos coordonnées</legend>
             <div>
               <label for="prenom">Prénom</label>
-              <input type="text" name="prenom" id="prenom" class="contact_input" minlength="2" required />
+              <input type="text" name="prenom" id="prenom" class="contact_input" aria-invalid="false" minlength="2" required />
+              <span class="error_prenom"></span>
             </div>
             <div>
               <label for="nom">Nom</label>
-              <input type="text" name="nom" id="nom" class="contact_input" minlength="2" required />
+              <input type="text" name="nom" id="nom" class="contact_input" minlength="2" aria-invalid="false" required />
+              <span class="error_nom"></span>
             </div>
             <div>
               <label for="email">Email</label>
-              <input type="email" name="email" id="email" class="contact_input" required />
+              <input type="email" name="email" id="email" class="contact_input" aria-invalid="false" required />
+              <span class="error_email"></span>
             </div>
             <div>
               <label for="message">Votre message</label>
@@ -46,6 +76,24 @@
             <button type="submit" class="envoyer_button">Envoyer</button>
           </fieldset>
         </form>
+      </div>
+    </div>
+    <div class="lightbox_modal" aria-hidden="true" role="dialog">
+      <div class="lightbox_content">
+        <button aria-label="Boutton pour fermer les photos du carrousel" class="lightbox_button-close">
+          <i class="fa-solid fa-xmark croix_carrousel"></i>
+        </button>
+        <button aria-label="Boutton pour passer à la photo précédente" class="lightbox_button-gauche">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button aria-label="Boutton pour passer à la photo suivante" class="lightbox_button-droite">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <div class="lightbox_image-container">
+          <video class="hide-video" controls></video>
+          <img class="image-carrousel" alt="" />
+          <p class="lightbox_description"></p>
+        </div>
       </div>
     </div>
     <script src="/scripts/factories/photographer.js"></script>

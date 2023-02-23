@@ -1,9 +1,16 @@
+let likeTotal = 0;
+
 function photographerFactory(data) {
   const { name, portrait, city, country, id, price, tagline, image, title, likes, video } = data;
-
   const picture = `assets/photographers/${portrait}`;
   const photomedia = `assets/images/media/${image}`;
   const videomedia = `assets/images/media/${video}`;
+
+  if (data && data.likes) {
+    likeTotal = likeTotal + data.likes;
+  }
+
+  console.log("fonction", likeTotal);
 
   function getUserCardDOM() {
     const article = document.createElement("article");
@@ -55,7 +62,7 @@ function photographerFactory(data) {
     divLike.setAttribute("class", "encart_div-like");
 
     const likeAmount = document.createElement("p");
-    likeAmount.textContent = likes;
+    likeAmount.textContent = likeTotal;
 
     const logoLike = document.createElement("i");
     logoLike.setAttribute("class", "fa-solid fa-heart");
@@ -92,8 +99,8 @@ function photographerFactory(data) {
     slogan.setAttribute("class", "card_slogan-spe");
 
     main.appendChild(tarifJournalier);
-    divLike.appendChild(logoLike);
     divLike.appendChild(likeAmount);
+    divLike.appendChild(logoLike);
     tarifJournalier.appendChild(divLike);
     tarifJournalier.appendChild(prix);
     mainProfilContainer.appendChild(article);
@@ -118,12 +125,14 @@ function photographerFactory(data) {
       const video = document.createElement("video");
       video.setAttribute("src", videomedia);
       video.setAttribute("class", "media_video");
+      video.setAttribute("title", `${title}`);
       link.appendChild(video);
     } else {
       const img = document.createElement("img");
       img.setAttribute("src", photomedia);
       img.setAttribute("class", "media_image");
       img.setAttribute("alt", "");
+      img.setAttribute("title", `${title}`);
       link.appendChild(img);
     }
 
@@ -150,18 +159,67 @@ function photographerFactory(data) {
     divLike.appendChild(likeAmount);
     divLike.appendChild(logoLike);
 
+    const bouttonLike = document.querySelectorAll(".media_text-like");
+    const lightboxModal = document.querySelector(".lightbox_modal");
+    const liensPhoto = document.querySelectorAll(".card_link");
+    liensPhoto.forEach((lien) => {
+      lien.addEventListener("click", function (e) {
+        const linkPhoto = e.target;
+        openLightbox(linkPhoto);
+      });
+    });
+
     return imageContainer;
   }
   return { name, picture, getUserCardDOM, getPhotographerPage, getMediaSection };
 }
 
 const bouttonEnvoyer = document.querySelector(".envoyer_button");
+const errorNom = document.querySelector(".error_nom");
+const errorPrenom = document.querySelector(".error_prenom");
+const errorEmail = document.querySelector(".error_email");
+const prenom = document.querySelector("#prenom");
+const nom = document.querySelector("#nom");
+const email = document.querySelector("#email");
+const message = document.querySelector("#message");
+
+nom.addEventListener("change", function () {
+  if (nom.validity.valid === false) {
+    nom.ariaInvalid = true;
+    nom.style.border = "3px solid red";
+    errorNom.innerHTML = "Veuillez entrer un nom valide";
+  } else {
+    nom.ariaInvalid = false;
+    nom.style.border = "3px solid green";
+    errorNom.innerHTML = "";
+  }
+});
+
+prenom.addEventListener("change", function () {
+  if (prenom.validity.valid === false) {
+    prenom.ariaInvalid = true;
+    prenom.style.border = "3px solid red";
+    errorPrenom.innerHTML = "Veuillez entrer un prénom valide";
+  } else {
+    prenom.ariaInvalid = false;
+    prenom.style.border = "3px solid green";
+    errorPrenom.innerHTML = "";
+  }
+});
+
+email.addEventListener("change", function () {
+  if (email.validity.valid === false) {
+    email.ariaInvalid = true;
+    email.style.border = "3px solid red";
+    errorEmail.innerHTML = "Veuillez entrer un Email valide";
+  } else {
+    email.ariaInvalid = false;
+    email.style.border = "3px solid green";
+    errorEmail.innerHTML = "";
+  }
+});
 
 bouttonEnvoyer.addEventListener("click", function (e) {
-  const prenom = document.querySelector("#prenom");
-  const nom = document.querySelector("#nom");
-  const email = document.querySelector("#email");
-  const message = document.querySelector("#message");
   e.preventDefault();
   if (prenom.validity.valid === true && nom.validity.valid === true && email.validity.valid === true) {
     console.log("Prénom =", prenom.value);
@@ -169,6 +227,37 @@ bouttonEnvoyer.addEventListener("click", function (e) {
     console.log("Email =", email.value);
     console.log("Message =", message.value);
   } else {
-    console.log("erreur de saisie du formulaire");
+    alert("Veuillez remplir les champs manquants");
   }
 });
+
+const divImageContainer = document.querySelector(".lightbox_image-container");
+const ImageLightbox = document.querySelector(".image-carrousel");
+const descriptionLightbox = document.querySelector(".lightbox_description");
+const videoLightbox = document.querySelector(".hide-video");
+
+function openLightbox(e) {
+  const srcImage = e.getAttribute("src");
+  const description = e.getAttribute("title");
+  const extension = srcImage.split(".").pop();
+  if (extension === "mp4") {
+    console.log("test vidéo");
+    videoLightbox.setAttribute("src", srcImage);
+    videoLightbox.setAttribute("class", "lightbox_image-container");
+  } else {
+    console.log("test photo");
+    ImageLightbox.setAttribute("src", `${srcImage}`);
+  }
+  descriptionLightbox.innerHTML = `${description}`;
+  lightbox.style.display = "flex";
+  lightbox.style.overflow = "hidden";
+  lightbox.setAttribute("aria-hidden", "false");
+  header.setAttribute("aria-hidden", "true");
+  main.setAttribute("aria-hidden", "true");
+  closeLightboxBtn.focus();
+}
+
+console.log(likeTotal);
+// for (let i = 0; i > data.length; i++) {
+//   console.log("test");
+// }
