@@ -48,7 +48,7 @@ function closeLighbox() {
   main.setAttribute("aria-hidden", "false");
   ImageLightbox.removeAttribute("src");
   videoLightbox.removeAttribute("src");
-  videoLightbox.classList.add("hide");
+  //videoLightbox.classList.add("hide");
 }
 
 function closeModal() {

@@ -1,16 +1,25 @@
 let likeTotal = 0;
 
+const divImageContainer = document.querySelector(".lightbox_image-container");
+const ImageLightbox = document.querySelector(".image-carrousel");
+const descriptionLightbox = document.querySelector(".lightbox_description");
+const videoLightbox = document.querySelector(".hide-video");
+const bouttonDroit = document.querySelector(".lightbox_button-droite");
+const bouttonGauche = document.querySelector(".lightbox_button-gauche");
+const bouttonClose = document.querySelector(".lightbox_button-close");
+
 function photographerFactory(data) {
   const { name, portrait, city, country, id, price, tagline, image, title, likes, video } = data;
   const picture = `assets/photographers/${portrait}`;
   const photomedia = `assets/images/media/${image}`;
   const videomedia = `assets/images/media/${video}`;
 
-  if (data && data.likes) {
-    likeTotal = likeTotal + data.likes;
+  function testCalcul() {
+    if (data && data.likes) {
+      likeTotal = likeTotal + data.likes;
+      return likeTotal;
+    }
   }
-
-  console.log("fonction", likeTotal);
 
   function getUserCardDOM() {
     const article = document.createElement("article");
@@ -62,7 +71,7 @@ function photographerFactory(data) {
     divLike.setAttribute("class", "encart_div-like");
 
     const likeAmount = document.createElement("p");
-    likeAmount.textContent = likeTotal;
+    likeAmount.setAttribute("class", "nombre-like");
 
     const logoLike = document.createElement("i");
     logoLike.setAttribute("class", "fa-solid fa-heart");
@@ -84,7 +93,7 @@ function photographerFactory(data) {
     const img = document.createElement("img");
     img.setAttribute("src", picture);
     img.setAttribute("class", "card_image");
-    img.setAttribute("alt", "");
+    img.setAttribute("alt", `${name}`);
 
     const h2 = document.createElement("h2");
     h2.textContent = name;
@@ -118,8 +127,9 @@ function photographerFactory(data) {
 
     const link = document.createElement("a");
     link.setAttribute("href", "#");
-    link.setAttribute("class", "card_link");
+    link.setAttribute("class", `card_link`);
     link.setAttribute("title", `${title}`);
+    link.setAttribute("id", `${id}`);
 
     if (image === undefined) {
       const video = document.createElement("video");
@@ -131,8 +141,7 @@ function photographerFactory(data) {
       const img = document.createElement("img");
       img.setAttribute("src", photomedia);
       img.setAttribute("class", "media_image");
-      img.setAttribute("alt", "");
-      img.setAttribute("title", `${title}`);
+      img.setAttribute("alt", `${title}`);
       link.appendChild(img);
     }
 
@@ -145,8 +154,10 @@ function photographerFactory(data) {
 
     const divLike = document.createElement("button");
     divLike.setAttribute("class", "media_text-like");
+    divLike.setAttribute("id", `likeButton-${id}`);
 
     const likeAmount = document.createElement("p");
+    likeAmount.setAttribute("class", "nombre-de-like");
     likeAmount.textContent = likes;
 
     const logoLike = document.createElement("i");
@@ -159,19 +170,45 @@ function photographerFactory(data) {
     divLike.appendChild(likeAmount);
     divLike.appendChild(logoLike);
 
-    const bouttonLike = document.querySelectorAll(".media_text-like");
-    const lightboxModal = document.querySelector(".lightbox_modal");
-    const liensPhoto = document.querySelectorAll(".card_link");
-    liensPhoto.forEach((lien) => {
-      lien.addEventListener("click", function (e) {
-        const linkPhoto = e.target;
-        openLightbox(linkPhoto);
-      });
-    });
-
     return imageContainer;
   }
-  return { name, picture, getUserCardDOM, getPhotographerPage, getMediaSection };
+
+  function addEventListenerOfPicture(maListe) {
+    const liensPhoto = document.getElementById(String(id));
+    liensPhoto.addEventListener("click", function (e) {
+      const linkPhoto = e.target;
+      openLightbox(linkPhoto, id, maListe);
+    });
+  }
+
+  function addLike(maPhoto) {
+    //RECUPERER UN BOUTON SELON SON ID (mesPhotos.id)
+    const bouttonLike = document.getElementById(`likeButton-${String(maPhoto.id)}`);
+    const amountlike = document.querySelector(".nombre-like");
+    let isLike = false;
+    bouttonLike.addEventListener("click", () => {
+      if (isLike === false) {
+        //Récupération de tous mes "nombre de like" de chaque photos et leur ajouter +1 dans le DOM
+        document.querySelectorAll(`#likeButton-${String(maPhoto.id)} > .nombre-de-like`)[0].textContent = maPhoto.likes + 1;
+        bouttonLike.classList.add("class", "like-active");
+        //Ajout de 1 like dans la data
+        maPhoto.likes += 1;
+        //Affichage des likes totaux
+        amountlike.innerHTML = Number(amountlike.textContent) + 1;
+        isLike = true;
+      } else {
+        document.querySelectorAll(`#likeButton-${String(maPhoto.id)} > .nombre-de-like`)[0].textContent = maPhoto.likes - 1;
+        bouttonLike.classList.remove("class", "like-active");
+        //Ajout de 1 like dans la data
+        maPhoto.likes -= 1;
+        //Affichage des likes totaux
+        amountlike.innerHTML = Number(amountlike.textContent) - 1;
+        isLike = false;
+      }
+    });
+  }
+
+  return { name, picture, getUserCardDOM, getPhotographerPage, getMediaSection, testCalcul, addEventListenerOfPicture, addLike };
 }
 
 const bouttonEnvoyer = document.querySelector(".envoyer_button");
@@ -231,33 +268,97 @@ bouttonEnvoyer.addEventListener("click", function (e) {
   }
 });
 
-const divImageContainer = document.querySelector(".lightbox_image-container");
-const ImageLightbox = document.querySelector(".image-carrousel");
-const descriptionLightbox = document.querySelector(".lightbox_description");
-const videoLightbox = document.querySelector(".hide-video");
+function openLightbox(e, idPicture, maListe) {
+  let idActuel = maListe.map((element) => element.id).indexOf(idPicture);
+  //console.log(idActuel);
+  //console.log(maListe[idActuel].image);
+  //console.log(maListe[idActuel].title);
+  const srcImage = maListe[idActuel].image;
+  const srcVideo = maListe[idActuel].video;
+  const description = maListe[idActuel].title;
+  videoLightbox.setAttribute("id", idPicture);
 
-function openLightbox(e) {
-  const srcImage = e.getAttribute("src");
-  const description = e.getAttribute("title");
-  const extension = srcImage.split(".").pop();
-  if (extension === "mp4") {
-    console.log("test vidéo");
-    videoLightbox.setAttribute("src", srcImage);
+  if (srcImage === undefined) {
+    videoLightbox.style.display = "flex";
+    videoLightbox.setAttribute("src", `assets/images/media/${srcVideo}`);
     videoLightbox.setAttribute("class", "lightbox_image-container");
   } else {
-    console.log("test photo");
-    ImageLightbox.setAttribute("src", `${srcImage}`);
+    videoLightbox.style.display = "none";
+    ImageLightbox.setAttribute("src", `assets/images/media/${srcImage}`);
   }
   descriptionLightbox.innerHTML = `${description}`;
+
   lightbox.style.display = "flex";
   lightbox.style.overflow = "hidden";
   lightbox.setAttribute("aria-hidden", "false");
   header.setAttribute("aria-hidden", "true");
   main.setAttribute("aria-hidden", "true");
   closeLightboxBtn.focus();
-}
 
-console.log(likeTotal);
-// for (let i = 0; i > data.length; i++) {
-//   console.log("test");
-// }
+  function navigationImageSuivante() {
+    if (idActuel === maListe.length - 1) {
+      idActuel = 0;
+    } else {
+      idActuel += 1;
+    }
+    //console.log(idActuel);
+    const srcImage = maListe[idActuel].image;
+    const srcVideo = maListe[idActuel].video;
+    const description = maListe[idActuel].title;
+    if (srcImage === undefined) {
+      videoLightbox.style.display = "flex";
+      videoLightbox.setAttribute("src", `assets/images/media/${srcVideo}`);
+      videoLightbox.setAttribute("class", "lightbox_image-container");
+      ImageLightbox.removeAttribute("src");
+    } else {
+      ImageLightbox.setAttribute("src", `assets/images/media/${srcImage}`);
+      videoLightbox.style.display = "none";
+    }
+    descriptionLightbox.innerHTML = `${description}`;
+
+    bouttonClose.addEventListener("click", function suppressionDeEvenement() {
+      bouttonDroit.removeEventListener("click", navigationImageSuivante);
+      bouttonClose.removeEventListener("click", suppressionDeEvenement);
+    });
+  }
+  function navigationImagePrecedente() {
+    if (idActuel === 0) {
+      idActuel = maListe.length - 1;
+    } else {
+      idActuel -= 1;
+    }
+    //console.log(idActuel);
+    const srcImage = maListe[idActuel].image;
+    const srcVideo = maListe[idActuel].video;
+    const description = maListe[idActuel].title;
+    if (srcImage === undefined) {
+      videoLightbox.style.display = "flex";
+      videoLightbox.setAttribute("src", `assets/images/media/${srcVideo}`);
+      videoLightbox.setAttribute("class", "lightbox_image-container");
+      ImageLightbox.removeAttribute("src");
+    } else {
+      ImageLightbox.setAttribute("src", `assets/images/media/${srcImage}`);
+      videoLightbox.style.display = "none";
+    }
+    descriptionLightbox.innerHTML = `${description}`;
+
+    bouttonClose.addEventListener("click", function suppressionDeEvenementPrecedent() {
+      bouttonGauche.removeEventListener("click", navigationImagePrecedente);
+      bouttonClose.removeEventListener("click", suppressionDeEvenementPrecedent);
+    });
+  }
+
+  //Appels des différentes fonction au click souris et clavier
+  bouttonDroit.addEventListener("click", navigationImageSuivante);
+  bouttonGauche.addEventListener("click", navigationImagePrecedente);
+  window.addEventListener("keydown", function (e) {
+    if (e.which === 39) {
+      navigationImageSuivante();
+    }
+  });
+  window.addEventListener("keydown", function (e) {
+    if (e.which === 37) {
+      navigationImagePrecedente();
+    }
+  });
+}

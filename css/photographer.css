@@ -36,6 +36,11 @@ header {
   display: flex;
   align-items: center;
 }
+
+.nombre-like {
+  margin-right: 5px;
+}
+
 .contact_button {
   font-size: 20px;
   font-weight: bold;
@@ -203,6 +208,7 @@ form input {
   column-gap: 20px;
   max-width: 1330px;
   margin: 0 auto;
+  margin-bottom: 25px;
 }
 
 .trieur_dropdown-section label {
@@ -260,6 +266,7 @@ form input {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding-bottom: 50px;
   column-gap: 80px;
   row-gap: 5px;
   max-width: 1440px;
@@ -308,7 +315,9 @@ form input {
   color: #901c1c;
   cursor: pointer;
 }
-
+.like-active {
+  color: #d3573c;
+}
 .media_text-like p {
   margin: 0 7px 0 0;
 }

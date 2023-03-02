@@ -5,15 +5,15 @@ async function getPhotographers() {
     const res = await fetch("../../data/photographers.json");
     if (res.ok) {
       const rawJson = await res.json();
-      console.log(rawJson);
-      console.log(rawJson.photographers);
-      console.log(rawJson.media);
+      //console.log(rawJson);
+      //console.log(rawJson.photographers);
+      //console.log(rawJson.media);
       return rawJson.photographers;
     } else {
       throw res.statusText;
     }
   } catch (ex) {
-    console.log(ex);
+    //console.log(ex);
     throw ex;
   }
 }
@@ -23,7 +23,7 @@ async function displayData(photographers) {
 
   photographers.forEach((photographer) => {
     const photographerModel = photographerFactory(photographer);
-    console.log(photographerModel);
+    //console.log(photographerModel);
     const userCardDOM = photographerModel.getUserCardDOM();
     photographersSection.appendChild(userCardDOM);
   });
@@ -46,10 +46,10 @@ init();
 //   .then(function (data) {
 //     return data.photographers;
 //     for (let photographers of data) {
-//       console.log("test");
+//       //console.log("test");
 //     }
 //   })
 //   .catch(function (err) {
-//     console.log(err);
+//     //console.log(err);
 //     alert("Une erreur est survenue, veuillez revenir plus tard");
 //   });
