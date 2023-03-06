@@ -9,7 +9,7 @@ const bouttonGauche = document.querySelector(".lightbox_button-gauche");
 const bouttonClose = document.querySelector(".lightbox_button-close");
 
 function photographerFactory(data) {
-  const { name, portrait, city, country, id, price, tagline, image, title, likes, video } = data;
+  const { name, portrait, city, country, id, price, tagline, date, image, title, likes, video } = data;
   const picture = `assets/photographers/${portrait}`;
   const photomedia = `assets/images/media/${image}`;
   const videomedia = `assets/images/media/${video}`;
@@ -122,8 +122,13 @@ function photographerFactory(data) {
   }
 
   function getMediaSection() {
+    let imageOuVideo = image ? image : video;
     const imageContainer = document.createElement("div");
     imageContainer.setAttribute("class", "media_container");
+    imageContainer.setAttribute("data-post-id", `${id}`);
+    imageContainer.setAttribute("data-date-publication", `${date}`);
+    imageContainer.setAttribute("data-like", `${likes}`);
+    imageContainer.setAttribute("data-titre", `${title}`);
 
     const link = document.createElement("a");
     link.setAttribute("href", "#");
@@ -131,7 +136,7 @@ function photographerFactory(data) {
     link.setAttribute("title", `${title}`);
     link.setAttribute("id", `${id}`);
 
-    if (image === undefined) {
+    if (imageOuVideo.split(".").pop() === "mp4") {
       const video = document.createElement("video");
       video.setAttribute("src", videomedia);
       video.setAttribute("class", "media_video");
@@ -205,6 +210,7 @@ function photographerFactory(data) {
         amountlike.innerHTML = Number(amountlike.textContent) - 1;
         isLike = false;
       }
+      getMediaSection();
     });
   }
 

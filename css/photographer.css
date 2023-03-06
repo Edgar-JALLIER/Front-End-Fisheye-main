@@ -218,18 +218,29 @@ form input {
   cursor: pointer;
 }
 
+.div-boutton-tri {
+  position: relative;
+}
+
 .trieur_dropdown-button {
   cursor: pointer;
   border: none;
   border-radius: 5px;
   font-size: 18px;
   font-weight: 700;
+  width: 170px;
   padding: 20px;
+  text-align: left;
   background-color: #901c1c;
   color: white;
 }
 .trieur_dropdown-button-icon {
+  position: absolute;
+  color: rgb(255, 255, 255);
   margin-left: 30px;
+  font-size: 18px;
+  right: 20px;
+  top: 20px;
   aspect-ratio: 1/1;
   transition: rotate 200ms ease-out;
 }

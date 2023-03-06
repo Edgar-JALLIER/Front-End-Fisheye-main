@@ -9,19 +9,121 @@ const lightbox = document.querySelector(".lightbox_modal");
 const btnDropdown = document.querySelector(".trieur_dropdown-button");
 const iconDropdown = document.querySelector("#icon-fleche");
 const listDropdown = document.querySelector(".trieur_dropdown-menu");
-
+const allBtnList = document.querySelectorAll(".dropdown_menu-item");
+const keyCodes = {
+  escape: 27,
+  enter: 13,
+};
 let isOpen = false;
-btnDropdown.addEventListener("click", function () {
+
+function changementDuTrieur() {
+  const allBtnList = document.querySelectorAll(".dropdown_menu-item");
   if (isOpen === false) {
+    btnDropdown.setAttribute("aria-expanded", "true");
     iconDropdown.classList.add("trieur_button-icon-moove");
     listDropdown.classList.remove("hide");
     isOpen = true;
   } else {
+    btnDropdown.setAttribute("aria-expanded", "false");
     iconDropdown.classList.remove("trieur_button-icon-moove");
     listDropdown.classList.add("hide");
     isOpen = false;
   }
-});
+  for (let btn of allBtnList) {
+    btn.addEventListener("click", setName);
+    btn.addEventListener("keydown", forKeybords);
+  }
+}
+
+function forKeybords(e) {
+  if (e.which === keyCodes.enter) {
+    setName(e.target);
+  }
+}
+
+function setName(e) {
+  const btnDropdown = document.querySelector(".trieur_dropdown-button");
+  //fonction conditionnel pour gérer l'évènement au clavier puisque avec clavier le this n'est pas reconnu (qui est normalement le btn cliqué)
+  btnDropdown.textContent = this.window ? e.innerText : this.innerText;
+  changementDuTrieur();
+  trieurDeMedias(btnDropdown);
+}
+
+function trieurDeMedias(optionDeTri) {
+  console.log("option de tri", optionDeTri);
+  let actualPostsNodeList = document.querySelectorAll(".media_container");
+  let actualPostsArray = Array.from(actualPostsNodeList);
+  console.log("test 2", actualPostsArray);
+  let actualPostDataArray = [];
+  for (let post of actualPostsArray) {
+    let imagePost = post.querySelector(".card_link").children[0];
+    let srcOfImage = imagePost.getAttribute("src").split("assets/images/media/")[1];
+    //console.log(imagePost);
+    let tagOfPost = imagePost.tagName;
+    //console.log(tagOfPost);
+    let anActualPostData = {
+      title: post.getAttribute("data-titre"),
+      likes: Number(post.getAttribute("data-like")),
+      date: post.getAttribute("data-date-publication"),
+      id: post.getAttribute("data-post-id"),
+    };
+    if (tagOfPost === "IMG") {
+      anActualPostData = {
+        ...anActualPostData,
+        image: srcOfImage,
+      };
+    } else {
+      anActualPostData = {
+        ...anActualPostData,
+        video: srcOfImage,
+      };
+    }
+    actualPostDataArray.push(anActualPostData);
+    console.log(typeof actualPostDataArray.likes);
+  }
+  console.log("nouvexu meida", actualPostDataArray);
+  let notreOptionDeTri = optionDeTri.innerText.toLowerCase();
+
+  const lesImages = document.querySelectorAll(".media_container");
+  lesImages.forEach((image) => {
+    image.remove();
+  });
+  likeTotal = 0;
+  envoiDesdonnéesDesMedia(trieurDeListe(actualPostDataArray, notreOptionDeTri));
+}
+btnDropdown.addEventListener("click", changementDuTrieur);
+
+function trieurDeListe(liste, valeurDeTri) {
+  console.log("test du trirur");
+  let tableauFinal = [];
+  switch (valeurDeTri) {
+    case "titre":
+      {
+        console.log("test fonction");
+        tableauFinal = liste.sort((a, b) => {
+          return a.title.localeCompare(b.title);
+        });
+        console.log("test valeur tableau titre", tableauFinal);
+      }
+      break;
+    case "popularité":
+      {
+        tableauFinal = liste.sort((a, b) => {
+          return b.likes - a.likes;
+        });
+      }
+      break;
+    case "date":
+      {
+        tableauFinal = liste.sort((a, b) => {
+          return b.date - a.date;
+        });
+      }
+      break;
+  }
+  console.log("test tableau final", tableauFinal);
+  return tableauFinal;
+}
 
 closeModalBtn.addEventListener("click", function () {
   closeModal();
@@ -58,10 +160,7 @@ function closeModal() {
   header.setAttribute("aria-hidden", "false");
   main.setAttribute("aria-hidden", "false");
 }
-const keyCodes = {
-  escape: 27,
-  enter: 13,
-};
+
 closeModalBtn.addEventListener("keydown", function (e) {
   if (e.which === keyCodes.escape) {
     closeModal();

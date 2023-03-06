@@ -20,7 +20,8 @@
       </div>
       <div class="trieur_dropdown-section">
         <label for="button-tri">Trier par :</label>
-        <div>
+        <div class="div-boutton-tri">
+          <i id="icon-fleche" class="fa-solid fa-chevron-down trieur_dropdown-button-icon"></i>
           <button
             class="trieur_dropdown-button"
             id="button-tri"
@@ -30,13 +31,12 @@
             aria-level="Bouton pour ouvrir le menu déroulant"
           >
             Popularité
-            <i id="icon-fleche" class="fa-solid fa-chevron-down trieur_dropdown-button-icon"></i>
           </button>
           <div class="trieur_dropdown-menu hide">
             <ul class="dropdown_menu-list">
-              <li class="dropdown_menu-item">Popularité</li>
-              <li class="dropdown_menu-item">Date</li>
-              <li class="dropdown_menu-item">Titre</li>
+              <li class="dropdown_menu-item" tabindex="0">Popularité</li>
+              <li class="dropdown_menu-item" tabindex="0">Date</li>
+              <li class="dropdown_menu-item" tabindex="0">Titre</li>
             </ul>
           </div>
         </div>
