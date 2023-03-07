@@ -66,6 +66,7 @@ function photographerFactory(data) {
 
     const tarifJournalier = document.createElement("div");
     tarifJournalier.setAttribute("class", "encart");
+    tarifJournalier.setAttribute("tabindex", "0");
 
     const divLike = document.createElement("div");
     divLike.setAttribute("class", "encart_div-like");
@@ -81,31 +82,38 @@ function photographerFactory(data) {
     prix.textContent = `${price}` + "€ / jour";
 
     const article = document.createElement("article");
+    article.setAttribute("tabindex", "0");
 
     const mainProfilContainer = document.createElement("section");
     mainProfilContainer.setAttribute("class", "main-profil-container");
+    mainProfilContainer.setAttribute("tabindex", "0");
 
     const btnContact = document.createElement("button");
     btnContact.setAttribute("class", "contact_button");
     btnContact.setAttribute("onclick", "displayModal()");
+    btnContact.setAttribute("aria-label", "Ouvrir la fiche de contact du photographe");
     btnContact.appendChild(document.createTextNode("Contactez-moi"));
 
     const img = document.createElement("img");
     img.setAttribute("src", picture);
     img.setAttribute("class", "card_image");
     img.setAttribute("alt", `${name}`);
+    img.setAttribute("tabindex", "0");
 
-    const h2 = document.createElement("h2");
-    h2.textContent = name;
-    h2.setAttribute("class", "card_name-spe");
+    const h1 = document.createElement("h1");
+    h1.textContent = `${name}`;
+    h1.setAttribute("class", "card_name-spe");
+    h1.setAttribute("tabindex", "0");
 
     const location = document.createElement("p");
     location.textContent = `${city}` + ", " + `${country}`;
     location.setAttribute("class", "card_location-spe");
+    location.setAttribute("tabindex", "0");
 
     const slogan = document.createElement("p");
     slogan.textContent = tagline;
     slogan.setAttribute("class", "card_slogan-spe");
+    slogan.setAttribute("tabindex", "0");
 
     main.appendChild(tarifJournalier);
     divLike.appendChild(likeAmount);
@@ -115,7 +123,7 @@ function photographerFactory(data) {
     mainProfilContainer.appendChild(article);
     article.after(btnContact);
     btnContact.after(img);
-    article.appendChild(h2);
+    article.appendChild(h1);
     article.appendChild(location);
     article.appendChild(slogan);
     return mainProfilContainer;
@@ -160,6 +168,8 @@ function photographerFactory(data) {
     const divLike = document.createElement("button");
     divLike.setAttribute("class", "media_text-like");
     divLike.setAttribute("id", `likeButton-${id}`);
+    divLike.setAttribute("aria-label", `Aimer la publication nommée ${title}`);
+    divLike.setAttribute("aria-pressed", "false");
 
     const likeAmount = document.createElement("p");
     likeAmount.setAttribute("class", "nombre-de-like");
@@ -167,6 +177,7 @@ function photographerFactory(data) {
 
     const logoLike = document.createElement("i");
     logoLike.setAttribute("class", "fa-solid fa-heart");
+    logoLike.setAttribute("aria-label", "like");
 
     imageContainer.appendChild(link);
     imageContainer.appendChild(textSousImg);
@@ -196,6 +207,7 @@ function photographerFactory(data) {
         //Récupération de tous mes "nombre de like" de chaque photos et leur ajouter +1 dans le DOM
         document.querySelectorAll(`#likeButton-${String(maPhoto.id)} > .nombre-de-like`)[0].textContent = maPhoto.likes + 1;
         bouttonLike.classList.add("class", "like-active");
+        bouttonLike.setAttribute("aria-pressed", "true");
         //Ajout de 1 like dans la data
         maPhoto.likes += 1;
         //Affichage des likes totaux
@@ -204,6 +216,7 @@ function photographerFactory(data) {
       } else {
         document.querySelectorAll(`#likeButton-${String(maPhoto.id)} > .nombre-de-like`)[0].textContent = maPhoto.likes - 1;
         bouttonLike.classList.remove("class", "like-active");
+        bouttonLike.setAttribute("aria-pressed", "false");
         //Ajout de 1 like dans la data
         maPhoto.likes -= 1;
         //Affichage des likes totaux
@@ -276,9 +289,6 @@ bouttonEnvoyer.addEventListener("click", function (e) {
 
 function openLightbox(e, idPicture, maListe) {
   let idActuel = maListe.map((element) => element.id).indexOf(idPicture);
-  //console.log(idActuel);
-  //console.log(maListe[idActuel].image);
-  //console.log(maListe[idActuel].title);
   const srcImage = maListe[idActuel].image;
   const srcVideo = maListe[idActuel].video;
   const description = maListe[idActuel].title;
@@ -288,9 +298,11 @@ function openLightbox(e, idPicture, maListe) {
     videoLightbox.style.display = "flex";
     videoLightbox.setAttribute("src", `assets/images/media/${srcVideo}`);
     videoLightbox.setAttribute("class", "lightbox_image-container");
+    videoLightbox.setAttribute("alt", `${description}`);
   } else {
     videoLightbox.style.display = "none";
     ImageLightbox.setAttribute("src", `assets/images/media/${srcImage}`);
+    ImageLightbox.setAttribute("alt", `${description}`);
   }
   descriptionLightbox.innerHTML = `${description}`;
 
@@ -307,7 +319,6 @@ function openLightbox(e, idPicture, maListe) {
     } else {
       idActuel += 1;
     }
-    //console.log(idActuel);
     const srcImage = maListe[idActuel].image;
     const srcVideo = maListe[idActuel].video;
     const description = maListe[idActuel].title;
@@ -316,8 +327,11 @@ function openLightbox(e, idPicture, maListe) {
       videoLightbox.setAttribute("src", `assets/images/media/${srcVideo}`);
       videoLightbox.setAttribute("class", "lightbox_image-container");
       ImageLightbox.removeAttribute("src");
+      ImageLightbox.removeAttribute("alt");
     } else {
       ImageLightbox.setAttribute("src", `assets/images/media/${srcImage}`);
+      ImageLightbox.setAttribute("alt", `${description}`);
+      videoLightbox.removeAttribute("alt");
       videoLightbox.style.display = "none";
     }
     descriptionLightbox.innerHTML = `${description}`;
@@ -327,13 +341,13 @@ function openLightbox(e, idPicture, maListe) {
       bouttonClose.removeEventListener("click", suppressionDeEvenement);
     });
   }
+
   function navigationImagePrecedente() {
     if (idActuel === 0) {
       idActuel = maListe.length - 1;
     } else {
       idActuel -= 1;
     }
-    //console.log(idActuel);
     const srcImage = maListe[idActuel].image;
     const srcVideo = maListe[idActuel].video;
     const description = maListe[idActuel].title;
@@ -342,8 +356,11 @@ function openLightbox(e, idPicture, maListe) {
       videoLightbox.setAttribute("src", `assets/images/media/${srcVideo}`);
       videoLightbox.setAttribute("class", "lightbox_image-container");
       ImageLightbox.removeAttribute("src");
+      ImageLightbox.removeAttribute("alt");
     } else {
       ImageLightbox.setAttribute("src", `assets/images/media/${srcImage}`);
+      ImageLightbox.setAttribute("alt", `${description}`);
+      videoLightbox.removeAttribute("alt");
       videoLightbox.style.display = "none";
     }
     descriptionLightbox.innerHTML = `${description}`;
@@ -358,12 +375,12 @@ function openLightbox(e, idPicture, maListe) {
   bouttonDroit.addEventListener("click", navigationImageSuivante);
   bouttonGauche.addEventListener("click", navigationImagePrecedente);
   window.addEventListener("keydown", function (e) {
-    if (e.which === 39) {
+    if (e.key == 39) {
       navigationImageSuivante();
     }
   });
   window.addEventListener("keydown", function (e) {
-    if (e.which === 37) {
+    if (e.key == 37) {
       navigationImagePrecedente();
     }
   });

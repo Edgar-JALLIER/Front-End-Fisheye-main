@@ -81,7 +81,7 @@ function trieurDeMedias(optionDeTri) {
     actualPostDataArray.push(anActualPostData);
     console.log(typeof actualPostDataArray.likes);
   }
-  console.log("nouvexu meida", actualPostDataArray);
+
   let notreOptionDeTri = optionDeTri.innerText.toLowerCase();
 
   const lesImages = document.querySelectorAll(".media_container");
@@ -94,16 +94,13 @@ function trieurDeMedias(optionDeTri) {
 btnDropdown.addEventListener("click", changementDuTrieur);
 
 function trieurDeListe(liste, valeurDeTri) {
-  console.log("test du trirur");
   let tableauFinal = [];
   switch (valeurDeTri) {
     case "titre":
       {
-        console.log("test fonction");
         tableauFinal = liste.sort((a, b) => {
           return a.title.localeCompare(b.title);
         });
-        console.log("test valeur tableau titre", tableauFinal);
       }
       break;
     case "popularité":
@@ -121,7 +118,6 @@ function trieurDeListe(liste, valeurDeTri) {
       }
       break;
   }
-  console.log("test tableau final", tableauFinal);
   return tableauFinal;
 }
 
@@ -150,7 +146,8 @@ function closeLighbox() {
   main.setAttribute("aria-hidden", "false");
   ImageLightbox.removeAttribute("src");
   videoLightbox.removeAttribute("src");
-  //videoLightbox.classList.add("hide");
+  ImageLightbox.removeAttribute("alt");
+  videoLightbox.removeAttribute("alt");
 }
 
 function closeModal() {
