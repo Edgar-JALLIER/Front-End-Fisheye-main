@@ -7,6 +7,7 @@ const videoLightbox = document.querySelector(".hide-video");
 const bouttonDroit = document.querySelector(".lightbox_button-droite");
 const bouttonGauche = document.querySelector(".lightbox_button-gauche");
 const bouttonClose = document.querySelector(".lightbox_button-close");
+//const lightbox = document.querySelector(".lightbox_modal");
 
 function photographerFactory(data) {
   const { name, portrait, city, country, id, price, tagline, date, image, title, likes, video } = data;
@@ -316,13 +317,14 @@ function openLightbox(e, idPicture, maListe) {
   //Appels des différentes fonction au click souris et clavier
   bouttonDroit.addEventListener("click", navigationImageSuivante);
   bouttonGauche.addEventListener("click", navigationImagePrecedente);
+   
   window.addEventListener("keydown", function (e) {
-    if (e.which === 39) {
+    if (e.key == "ArrowRight" && lightbox.ariaHidden == "false") {
       navigationImageSuivante();
     }
   });
   window.addEventListener("keydown", function (e) {
-    if (e.which === 37) {
+    if (e.key == "ArrowLeft" && lightbox.ariaHidden == "false") {
       navigationImagePrecedente();
     }
   });

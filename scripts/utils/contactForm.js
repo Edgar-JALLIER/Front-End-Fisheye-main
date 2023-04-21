@@ -110,7 +110,9 @@ function trieurDeListe(liste, valeurDeTri) {
     case "date":
       {
         tableauFinal = liste.sort((a, b) => {
-          return b.date - a.date;
+          const date1 = new Date(a.date)
+          const date2 = new Date(b.date)
+          return date2 - date1;
         });
       }
       break;
@@ -212,14 +214,14 @@ function closeModal() {
   main.setAttribute("aria-hidden", "false");
 }
 
-closeModalBtn.addEventListener("keydown", function (e) {
-  if (e.which === keyCodes.escape) {
+window.addEventListener("keydown", function (e) {
+  if (e.key == "Escape" && modal.ariaHidden == "false") {
     closeModal();
   }
 });
 
-closeLightboxBtn.addEventListener("keydown", function (e) {
-  if (e.which === keyCodes.escape) {
+window.addEventListener("keydown", function (e) {
+  if (e.key == "Escape" && lightbox.ariaHidden == "false") {
     closeLighbox();
   }
 });
