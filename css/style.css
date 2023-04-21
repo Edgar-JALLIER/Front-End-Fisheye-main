@@ -48,7 +48,15 @@ h1 {
   border: 3px solid #d3573c;
 }
 
+.card_link:focus > .card_image {
+  border: 3px solid #d3573c;
+}
+
 .card_link:hover > .card_name {
+  text-decoration: underline;
+}
+
+.card_link:focus > .card_name {
   text-decoration: underline;
 }
 

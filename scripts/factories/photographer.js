@@ -14,7 +14,7 @@ function photographerFactory(data) {
   const photomedia = `assets/images/media/${image}`;
   const videomedia = `assets/images/media/${video}`;
 
-  function testCalcul() {
+  function calculLike() {
     if (data && data.likes) {
       likeTotal = likeTotal + data.likes;
       return likeTotal;
@@ -223,69 +223,11 @@ function photographerFactory(data) {
         amountlike.innerHTML = Number(amountlike.textContent) - 1;
         isLike = false;
       }
-      getMediaSection();
     });
   }
 
-  return { name, picture, getUserCardDOM, getPhotographerPage, getMediaSection, testCalcul, addEventListenerOfPicture, addLike };
+  return { name, picture, getUserCardDOM, getPhotographerPage, getMediaSection, calculLike, addEventListenerOfPicture, addLike };
 }
-
-const bouttonEnvoyer = document.querySelector(".envoyer_button");
-const errorNom = document.querySelector(".error_nom");
-const errorPrenom = document.querySelector(".error_prenom");
-const errorEmail = document.querySelector(".error_email");
-const prenom = document.querySelector("#prenom");
-const nom = document.querySelector("#nom");
-const email = document.querySelector("#email");
-const message = document.querySelector("#message");
-
-nom.addEventListener("change", function () {
-  if (nom.validity.valid === false) {
-    nom.ariaInvalid = true;
-    nom.style.border = "3px solid red";
-    errorNom.innerHTML = "Veuillez entrer un nom valide";
-  } else {
-    nom.ariaInvalid = false;
-    nom.style.border = "3px solid green";
-    errorNom.innerHTML = "";
-  }
-});
-
-prenom.addEventListener("change", function () {
-  if (prenom.validity.valid === false) {
-    prenom.ariaInvalid = true;
-    prenom.style.border = "3px solid red";
-    errorPrenom.innerHTML = "Veuillez entrer un prénom valide";
-  } else {
-    prenom.ariaInvalid = false;
-    prenom.style.border = "3px solid green";
-    errorPrenom.innerHTML = "";
-  }
-});
-
-email.addEventListener("change", function () {
-  if (email.validity.valid === false) {
-    email.ariaInvalid = true;
-    email.style.border = "3px solid red";
-    errorEmail.innerHTML = "Veuillez entrer un Email valide";
-  } else {
-    email.ariaInvalid = false;
-    email.style.border = "3px solid green";
-    errorEmail.innerHTML = "";
-  }
-});
-
-bouttonEnvoyer.addEventListener("click", function (e) {
-  e.preventDefault();
-  if (prenom.validity.valid === true && nom.validity.valid === true && email.validity.valid === true) {
-    console.log("Prénom =", prenom.value);
-    console.log("Nom =", nom.value);
-    console.log("Email =", email.value);
-    console.log("Message =", message.value);
-  } else {
-    alert("Veuillez remplir les champs manquants");
-  }
-});
 
 function openLightbox(e, idPicture, maListe) {
   let idActuel = maListe.map((element) => element.id).indexOf(idPicture);
@@ -375,12 +317,12 @@ function openLightbox(e, idPicture, maListe) {
   bouttonDroit.addEventListener("click", navigationImageSuivante);
   bouttonGauche.addEventListener("click", navigationImagePrecedente);
   window.addEventListener("keydown", function (e) {
-    if (e.key == 39) {
+    if (e.which === 39) {
       navigationImageSuivante();
     }
   });
   window.addEventListener("keydown", function (e) {
-    if (e.key == 37) {
+    if (e.which === 37) {
       navigationImagePrecedente();
     }
   });

@@ -46,14 +46,12 @@ function envoiDesdonnéesDuPhotographe(infosPhotographe) {
 }
 
 async function envoiDesdonnéesDesMedia(medias) {
-  console.log("test medias", medias);
   const photographersMedia = document.querySelector(".photograph-media");
   let total = 0;
-  console.log("total like", total);
   medias.forEach((media) => {
     const mediaModel = photographerFactory(media);
     const photographerMedia = mediaModel.getMediaSection();
-    total = mediaModel.testCalcul();
+    total = mediaModel.calculLike();
     photographersMedia.appendChild(photographerMedia);
     mediaModel.addEventListenerOfPicture(medias);
     mediaModel.addLike(media);
@@ -66,8 +64,6 @@ async function initialisation() {
   // Récupère les datas des photographes
   const photographe = await getOnePhotographer();
   const media = await getMedia();
-  console.log(photographe);
-  console.log(media);
   envoiDesdonnéesDuPhotographe(photographe);
   envoiDesdonnéesDesMedia(media);
 }
