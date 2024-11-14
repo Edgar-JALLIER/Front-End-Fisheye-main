@@ -3,13 +3,21 @@ const urlActuel = window.location.href;
 const url = new URL(urlActuel);
 const idPhotographer = url.searchParams.get("id");
 
+const repoName = window.location.pathname.startsWith("/Projet-6-FishEye")
+  ? "/Projet-6-FishEye"
+  : "";
+
+const urlGitHubPage = `${repoName}/data/photographers.json`;
+
 async function getOnePhotographer() {
   try {
-    const resultat = await fetch("../../data/photographers.json");
+    const resultat = await fetch(urlGitHubPage);
     if (resultat.ok) {
       const resJson = await resultat.json();
       const allPhotographers = resJson.photographers;
-      const onePhotographer = allPhotographers.find((element) => element.id === Number(idPhotographer));
+      const onePhotographer = allPhotographers.find(
+        (element) => element.id === Number(idPhotographer)
+      );
       return onePhotographer;
     } else {
       throw resultat.statusText;
@@ -22,11 +30,13 @@ async function getOnePhotographer() {
 
 async function getMedia() {
   try {
-    const resultat = await fetch("../../data/photographers.json");
+    const resultat = await fetch(urlGitHubPage);
     if (resultat.ok) {
       const resJson = await resultat.json();
       const allMedia = resJson.media;
-      const mediaId = allMedia.filter((element) => element.photographerId === Number(idPhotographer));
+      const mediaId = allMedia.filter(
+        (element) => element.photographerId === Number(idPhotographer)
+      );
       return mediaId;
     } else {
       throw resultat.statusText;

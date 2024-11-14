@@ -1,8 +1,14 @@
 async function getPhotographers() {
   // Ceci est un exemple de données pour avoir un affichage de photographes de test dès le démarrage du projet,
   // mais il sera à remplacer avec une requête sur le fichier JSON en utilisant "fetch".
+
+  const repoName = window.location.pathname.startsWith("/Projet-6-FishEye")
+    ? "/Projet-6-FishEye"
+    : "";
+
+  const urlGitHubPage = `${repoName}/data/photographers.json`;
   try {
-    const res = await fetch("../../data/photographers.json");
+    const res = await fetch(urlGitHubPage);
     if (res.ok) {
       const rawJson = await res.json();
       return rawJson.photographers;
