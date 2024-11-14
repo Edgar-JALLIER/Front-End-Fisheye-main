@@ -4,24 +4,41 @@
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
-    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/a4690ed988.js" crossorigin="anonymous"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/a4690ed988.js"
+      crossorigin="anonymous"
+    ></script>
     <title>Fisheye - photographe</title>
   </head>
   <body id="body">
     <header class="header-accueil" aria-hidden="false" tabindex="0">
       <a href="index.html" title="Lien vers la page d'accueil"
-        ><img src="assets/images/logo.png" class="logo" alt="FishEye - Aller à la page d'accueil"
+        ><img
+          src="assets/images/logo.png"
+          class="logo"
+          alt="FishEye - Aller à la page d'accueil"
       /></a>
     </header>
-    <main id="main" tabindex="0" aria-label="Contenu de la page principale du photographe" aria-hidden="false">
+    <main
+      id="main"
+      tabindex="0"
+      aria-label="Contenu de la page principale du photographe"
+      aria-hidden="false"
+    >
       <div class="photograph-header">
         <div id="btn"></div>
       </div>
       <div class="trieur_dropdown-section">
         <label for="button-tri">Trier par :</label>
         <div class="div-boutton-tri">
-          <i id="icon-fleche" class="fa-solid fa-chevron-down trieur_dropdown-button-icon"></i>
+          <i
+            id="icon-fleche"
+            class="fa-solid fa-chevron-down trieur_dropdown-button-icon"
+          ></i>
           <button
             class="trieur_dropdown-button"
             id="button-tri"
@@ -34,9 +51,15 @@
           </button>
           <div class="trieur_dropdown-menu hide">
             <ul class="dropdown_menu-list">
-              <li class="dropdown_menu-item" role="listbox" tabindex="0">Popularité</li>
-              <li class="dropdown_menu-item" role="listbox" tabindex="0">Date</li>
-              <li class="dropdown_menu-item" role="listbox" tabindex="0">Titre</li>
+              <li class="dropdown_menu-item" role="listbox" tabindex="0">
+                Popularité
+              </li>
+              <li class="dropdown_menu-item" role="listbox" tabindex="0">
+                Date
+              </li>
+              <li class="dropdown_menu-item" role="listbox" tabindex="0">
+                Titre
+              </li>
             </ul>
           </div>
         </div>
@@ -47,7 +70,11 @@
       <div class="modal">
         <header>
           <h2 class="titre_contact"></h2>
-          <button class="close-modal" aria-controls="dialog" aria-label="Fermer le formulaire de contact">
+          <button
+            class="close-modal"
+            aria-controls="dialog"
+            aria-label="Fermer le formulaire de contact"
+          >
             <i class="fa-solid fa-xmark croix"></i>
           </button>
         </header>
@@ -97,22 +124,40 @@
             </div>
             <div>
               <label for="message">Votre message</label>
-              <textarea name="message" id="message" class="contact_input"></textarea>
+              <textarea
+                name="message"
+                id="message"
+                class="contact_input"
+              ></textarea>
             </div>
             <button type="submit" class="envoyer_button">Envoyer</button>
           </fieldset>
         </form>
       </div>
     </div>
-    <div class="lightbox_modal" aria-hidden="true" role="dialog" aria-label="image closeup view">
+    <div
+      class="lightbox_modal"
+      aria-hidden="true"
+      role="dialog"
+      aria-label="image closeup view"
+    >
       <div class="lightbox_content">
-        <button aria-label="Fermer les photos du carrousel" class="lightbox_button-close">
+        <button
+          aria-label="Fermer les photos du carrousel"
+          class="lightbox_button-close"
+        >
           <i class="fa-solid fa-xmark croix_carrousel"></i>
         </button>
-        <button aria-label="Passer à la photo précédente" class="lightbox_button-gauche">
+        <button
+          aria-label="Passer à la photo précédente"
+          class="lightbox_button-gauche"
+        >
           <i class="fa-solid fa-chevron-left"></i>
         </button>
-        <button aria-label="Passer à la photo suivante" class="lightbox_button-droite">
+        <button
+          aria-label="Passer à la photo suivante"
+          class="lightbox_button-droite"
+        >
           <i class="fa-solid fa-chevron-right"></i>
         </button>
         <div class="lightbox_image-container">
@@ -122,8 +167,8 @@
         </div>
       </div>
     </div>
-    <script src="/scripts/factories/photographer.js"></script>
-    <script src="/scripts/pages/photographer.js"></script>
-    <script src="/scripts/utils/contactForm.js"></script>
+    <script src="scripts/factories/photographer.js"></script>
+    <script src="scripts/pages/photographer.js"></script>
+    <script src="scripts/utils/contactForm.js"></script>
   </body>
 </html>
